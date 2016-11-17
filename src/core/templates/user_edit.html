@@ -15,12 +15,10 @@
                         <div class="col-xs-12 col-sm-3 center">
                         {% if user.avatar %}
                             <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
-                                 src="{{ user.avatar.url }}"
-                                 style="max-width: 350px; max-height: 350px;">
+                                 src="{{ user.avatar.url }}">
                         {% else %}
                             <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
-                                 src="{% static "images/default-avatar.png" %}"
-                                 style="max-width: 350px; max-height: 350px;">
+                                 src="{% static "images/default-avatar.png" %}">
                         {% endif %}
                         <button type="submit" class="btn btn-sm btn-block btn-success" form="user_edit_form">
                             <i class="ace-icon fa fa-floppy-o bigger-120"></i>
@@ -30,7 +28,7 @@
                         <hr class="featurette-divider">
                     </div><!-- /.col -->
 
-                    <div class="col-xs-12 col-sm-9 center">
+                    <div class="col-xs-12 col-sm-9">
                         <form method="post" id="user_edit_form" enctype="multipart/form-data"> {% csrf_token %}
                             <h4 class="blue middle"> {{ user.username }} </h4>
                             <div class="profile-user-info profile-info-row">

@@ -16,12 +16,10 @@
                         <div class="col-xs-12 col-sm-3 center">
                             {% if user_account.avatar %}
                                 <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
-                                     src="{{ user_account.avatar.url }}"
-                                     style="max-width: 350px; max-height: 350px;">
+                                     src="{{ user_account.avatar.url }}">
                             {% else %}
                                 <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
-                                     src="{% static "images/default-avatar.png" %}"
-                                     style="max-width: 350px; max-height: 350px;">
+                                     src="{% static "images/default-avatar.png" %}">
                             {% endif %}
                             {% if user_account == user %}
                                 <a href="{% url 'core:user_edit' slug=user_account %}"
@@ -33,7 +31,7 @@
                             <hr class="featurette-divider">
                         </div>
 
-                        <div class="col-xs-12 col-sm-9 center">
+                        <div class="col-xs-12 col-sm-9">
                             <h4 class="blue middle"> {{ user_account.username }} </h4>
                             <div class="profile-user-info profile-info-row">
                                 <div class="profile-info-name"> Имя</div>
