@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bootstrap/user.css' %} ">
+    <link rel="stylesheet" href="{% static 'bootstrap/self.css' %} ">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 50px;">
+        <div class="container">
+            <div id="user-profile-2" class="user-profile tabbable">
+                <div class="tab-content no-border padding-24">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                            {% if user_account.avatar %}
+                                <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
+                                     src="{{ user_account.avatar.url }}"
+                                     style="max-width: 350px; max-height: 350px;">
+                            {% else %}
+                                <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
+                                     src="{% static "images/default-avatar.png" %}"
+                                     style="max-width: 350px; max-height: 350px;">
+                            {% endif %}
+                            {% if user_account == user %}
+                                <a href="{% url 'core:user_edit' slug=user_account %}"
+                                   class="btn btn-sm btn-block btn-success">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                    <span class="bigger-110">Edit</span>
+                                </a>
+                            {% endif %}
+                            <hr class="featurette-divider">
+                        </div>
+
+                        <div class="col-xs-12 col-sm-9 center">
+                            <h4 class="blue middle"> {{ user_account.username }} </h4>
+                            <div class="profile-user-info profile-info-row">
+                                <div class="profile-info-name"> Имя</div>
+                                <div class="profile-info-value"> {{ user_account.get_full_name }} </div>
+                            </div>
+
+
+                            {% if user_account.get_pubs.all %}
+                                <h3 class="widget-title"> Videos: </h3>
+                                <ul class="media-list">
+                                    {% for video in user_account.get_pubs.all %}
+                                        <li class="media">
+                                            <a class="pull-left" href="{% url "video:video_detail" pk=video.id %}">
+                                                {% if video.poster %}
+                                                    <img class="media-object" src="{{ video.poster.url }}" alt="lol"
+                                                         style="max-width: 165px; max-height: 165px;"></a>
+                                                {% else %}
+                                                    <img class="media-object"
+                                                         src="{% static "images/default-poster.jpg" %}" alt="lol"
+                                                         style="max-width: 165px; max-height: 165px;"></a>
+                                                {% endif %}
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a
+                                                        href="{% url "video:video_detail" pk=video.id %}">{{ video.title }}</a>
+                                                </h4>
+                                                {% if user == video.author %}
+                                                    <h6 class="text-muted"><a
+                                                            href="{% url 'video:video_edit' pk=video.id %}">Edit</a>
+                                                    </h6>
+                                                {% endif %}
+                                                <h6 class="text-muted"> {{ video.created_at|date:'d M Y H:i' }}
+                                                    • {{ video.count_likes }} likes • {{ video.category }}</h6>
+                                            </div>
+                                        </li>
+                                        <hr class="featurette-divider">
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div><!-- /.col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

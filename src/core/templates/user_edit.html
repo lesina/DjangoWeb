@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bootstrap/user.css' %} ">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 50px;">
+        <div class="container">
+            <div id="user-profile-2" class="user-profile tabbable">
+                <div class="tab-content no-border padding-24">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 center">
+                        {% if user.avatar %}
+                            <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
+                                 src="{{ user.avatar.url }}"
+                                 style="max-width: 350px; max-height: 350px;">
+                        {% else %}
+                            <img class="editable img-responsive profile-picture" alt="200x200" id="avatar2"
+                                 src="{% static "images/default-avatar.png" %}"
+                                 style="max-width: 350px; max-height: 350px;">
+                        {% endif %}
+                        <button type="submit" class="btn btn-sm btn-block btn-success" form="user_edit_form">
+                            <i class="ace-icon fa fa-floppy-o bigger-120"></i>
+                            <span class="bigger-110">Save</span>
+                        </button>
+
+                        <hr class="featurette-divider">
+                    </div><!-- /.col -->
+
+                    <div class="col-xs-12 col-sm-9 center">
+                        <form method="post" id="user_edit_form" enctype="multipart/form-data"> {% csrf_token %}
+                            <h4 class="blue middle"> {{ user.username }} </h4>
+                            <div class="profile-user-info profile-info-row">
+                                <div class="profile-info-name"> Имя</div>
+                                <div class="profile-info-value"> {% render_field form.first_name class+='form-control' %} </div>
+                            </div>
+                            <div class="profile-user-info profile-info-row">
+                                <div class="profile-info-name"> Фамилия</div>
+                                <div class="profile-info-value"> {% render_field form.last_name class+='form-control' %} </div>
+                            </div>
+                            <div class="profile-user-info profile-info-row">
+                                <div class="profile-info-name"> E-mail</div>
+                                <div class="profile-info-value"> {% render_field form.email class+='form-control' %} </div>
+                            </div>
+                            <div class="profile-user-info profile-info-row">
+                                <div class="profile-info-name"> Avatar</div>
+                                <div class="profile-info-value"> {% render_field form.avatar %} </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

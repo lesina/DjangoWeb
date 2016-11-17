@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/signin.css' %} ">
+{% endblock %}
+
+{% block content %}
+    <div class="container page">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form method="post" enctype="multipart/form-data" class="form-control-file"> {% csrf_token %}
+                <h2 class="form-signin-heading">Add video</h2>
+                {% if form.errors %}
+                    <p class="error">Please, correct mistakes.</p>
+                {% endif %}
+                {% for field in form %}
+                    <label>{{ field.label }}</label>
+                    {% render_field field placeholder=field.label class+='form-control' %}
+                {% endfor %}
+                <div class="pull-right">
+                    <input class="btn btn-lg btn-secondary" type="submit" value="Add">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <br>
+    <div class="container">
+    <form method="post"> {% csrf_token %}
+        {{ form.title.label_tag }} <br> {{ form.title }} <br>
+        {{ form.title.errors }}
+        {{ form.poster.label_tag }} {% if video.poster %} <br> <img src='{{ video.poster.url }}' width="500px"> {% endif %} <br> {{ form.poster }} <br>
+        {{ form.poster.errors }}
+        {{ form.description.label_tag }} <br> {{ form.description }} <br>
+        {{ form.description.errors }}
+        {{ form.category.label_tag }} <br> {{ form.category }} <br>
+        {{ form.category.errors }}
+        <input type="submit" value="Change">
+    </form>
+    </div>
+
+{% endblock %}

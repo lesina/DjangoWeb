@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title> VIDOSSO </title>
+    {% load staticfiles %}
+    {% load widget_tweaks %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/sticky-footer-navbar.css' %}">
+    {% block head %}
+    {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href='{% url 'video:video_list' %}'>VIDOSSO</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a class="nav-item nav-link" href="{% url 'video:video_list' %}">Watch video</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Category <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% for x in categories %}
+                            <li><a href="{% url 'video:list_category' slug=x %}">{{ x }}</a></li>
+                        {% endfor %}
+                        <li class="divider"></li>
+                        <li><a href="{% url 'video:list_category' slug='all' %}">All</a></li>
+                    </ul>
+                </li>
+                {% if user.is_authenticated %}
+                    <li><a class="nav-item nav-link" href="{% url 'video:create_video' %}">Add video</a></li>
+                    <li><a class="nav-item nav-link" href="{{ user.get_absolute_url }}">Profile</a></li>
+
+                {% endif %}
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li><a class="nav-item nav-link" href="{% url 'core:logout' %}">Log out</a></li>
+                {% else %}
+                    <li><a class="nav-item nav-link" href="{% url 'core:login' %}">Log in</a></li>
+                    <li><a class="nav-item nav-link" href="{% url 'core:registration' %}">Registration</a></li>
+                {% endif %}
+            </ul>
+            {% block title %}
+                <form action="{% url 'video:video_list' %}" class="navbar-form navbar-right">
+                    {% render_field search_form.search class+='form-contol' placeholder='Search' %}
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+</nav>
+<div style="margin-top: 40px;">
+    {% block content %}Content{% endblock %}
+</div>
+<div style="margin-top: 60px;">
+    {% block footer %}
+        <div id="footer">
+            <div class="container">
+                <p class="pull-right"><a href="#">Back to top</a></p>
+                <p>&copy; 2016 Vidosso, Inc. &middot; Contact us: lesha_lesovoy@mail.ru</p>
+            </div>
+        </div>
+    {% endblock %}
+</div>
+</body>
+</html>

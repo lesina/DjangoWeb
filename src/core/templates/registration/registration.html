@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'signin.css' %} ">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 100px">
+   <div class="container">
+   <div class="col-md-4"></div>
+   <div class="col-md-4">
+        {% if user.is_anonymous %}
+            <form method="post" enctype="multipart/form-data" class="form-signin"> {% csrf_token %}
+                <h2 class="form-signin-heading">Registration</h2>
+                {% if form.errors %}
+                    <p class="error">Correct the mistakes.</p>
+                {% endif %}
+                {% for field in form %}
+                    {% render_field field placeholder=field.label class+='form-control' %}
+                    {{ field.errors }}
+                {% endfor %}
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Registrate">
+            </form>
+        {% else %}
+            <h2 class="form-signin-heading"><br> You are rigistrated or authorised yet</h2>
+        {% endif %}
+   </div>
+</div>
+    </div>
+{% endblock %}
